@@ -1,0 +1,191 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="import" href="/rent_box_form.html">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'profile.css' %}">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+
+<div class="tab">
+  <button class="tablinks" onclick="openItem(event, 'Профиль')" id="defaultOpen">Профиль</button>
+  <button class="tablinks" onclick="openItem(event, 'Боксовые заказы')">Боксовые заказы</button>
+  <button class="tablinks" onclick="openItem(event, 'Сезонное хранение')">Сезонное хранение</button>
+  <a href="{% url 'move_to_main' %}"><button class="tablinks">НА ГЛАВНУЮ</button></a>
+  <button class="tablinks" onclick="openItem(event, 'Склады')">Склады</button>
+  <button class="tablinks" onclick="openItem(event, 'QR')">QR код</button>
+</div>
+
+<div id="Профиль" class="tabcontent">
+  <h4>Фамилия: {{profile.last_name}}</h4>
+  <h4>Имя: {{profile.first_name}}</h4>
+  <h4>Отчество: {{profile.patronymic}}</h4>
+  <h4>Email: {{profile.email}}</h4>
+  <h4>Дата рождения: {{profile.date_of_birth}}</h4>
+  <h4>Контактный телефон: {{profile.contact_phone}}</h4>
+  <h4>Паспорт: {{profile.passport}}</h4>
+  <h4>Адрес: {{profile.address}}</h4>
+  <br>
+  <a href="{% url 'edit_profile' %}"><button>Редактировать профиль</button></a>
+</div>
+
+<div id="Боксовые заказы" class="tabcontent">
+  {% for box_order in box_orders %}
+    <h3>Заказ № {{forloop.counter}}</h3>
+    <h4>Размер бокса: {{box_order.box_size}}</h4>
+    <h4>Цена в месяц: {{box_order.price}}</h4>
+    <h4>Место хранения: {{box_order.storage}}</h4>
+    <h4>Дата начала хранения: {{box_order.date_from}}</h4>
+    <h4>Дата окончания хранения: {{box_order.date_to}}</h4>
+  {% endfor %}
+     <!-- Форма аренды бокса -->
+    <button onclick="document.getElementById('id01').style.display='block'">Заказать</button>
+    <div id="id01" class="modal">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Закрыть модальный"></span>
+      <form class="modal-content" action="{% url 'make_box_order' %}" method="post">
+        {% csrf_token %}
+        <div class="container">
+          <h1>Аренда бокса</h1>
+          <hr>
+          <label for="storage"><b>Место хранения</b></label>
+          <br>
+          <select id="storage" class="select-option" name="storage">
+            <option>Склад № 1 - Минск, улица Домбровская, 8</option>
+            <option>Склад № 2 - Минск, улица Лукьяновича, 6</option>
+            <option>Склад № 3 - Минск, улица Омельянюка, 4</option>
+            <option>Склад № 4 - Минск, переулок Софьи Ковалевской, 46</option>
+          </select>
+          <br><br>
+          <label for="box"><b>Размер бокса в м.кв. --- Цена за месяц </b></label>
+          <br>
+          <select id="box" name="box">
+            {% for box_price in boxes_price %}
+            <option>{{forloop.counter}} - {{box_price}}</option>
+            {% endfor %}
+          </select>
+          <br><br>
+          <label for="date_from"><b>Дата начала хранения</b></label>
+          <br>
+          <input type="date" id="date_from" name="date_from" min="2022-07-01" max="2023-07-01">
+          <br><br>
+          <label for="date_to"><b>Дата окончания хранения</b></label>
+          <br>
+          <input type="date" id="date_to" name="date_to" min="2022-07-01" max="2023-07-01">
+          <br><br>
+
+          <div class="clearfix">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Отменить</button>
+            <button type="submit" class="signup">Арендовать</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script>
+    // Получить модель
+    var modal = document.getElementById('id01');
+
+    // Когда пользователь щелкает в любом месте за пределами модального, закройте его
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+</div>
+
+<div id="Сезонное хранение" class="tabcontent">
+  {% for season_order in season_orders %}
+    <h3>Заказ № {{forloop.counter}}</h3>
+    <h4>Что хранится: {{season_order.item}}</h4>
+    <h4>Количество: {{season_order.quantity}}</h4>
+    <h4>Цена в неделю: {{season_order.price}}</h4>
+    <h4>Место хранения: {{season_order.storage}}</h4>
+    <h4>Дата начала хранения: {{season_order.date_from}}</h4>
+    <h4>Дата окончания хранения: {{season_order.date_to}}</h4>
+  {% endfor %}
+<!-- Модальный (содержит форму регистрации) -->
+    <button onclick="document.getElementById('id02').style.display='block'">Заказать</button>
+    <div id="id02" class="modal">
+      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Закрыть модальный"></span>
+      <form class="modal-content" action="{% url 'make_season_order' %}" method="post">
+        {% csrf_token %}
+        <div class="container">
+          <h1>Сезонное хранение</h1>
+          <label for="season_item"><b>Выбрать предмет на хранение:</b>
+            <br>
+            <select class="select-option" id="season_item" name="season_item">
+              <option>Лыжи</option>
+              <option>Сноуборд </option>
+              <option>Велосипед</option>
+              <option>Колеса</option>
+            </select>
+          </label>
+          <br><br>
+          <label for="quantity"><b>Количество:</b>
+            <br>
+            <input type="number" id="quantity" name="quantity">
+          </label>
+          <br><br>
+          <label for="storage"><b>Место хранения:</b>
+            <br>
+            <select class="select-option" id="storage" name="storage">
+              <option>Склад № 1 - Минск, улица Домбровская, 8</option>
+              <option>Склад № 2 - Минск, улица Лукьяновича, 6</option>
+              <option>Склад № 3 - Минск, улица Омельянюка, 4</option>
+              <option>Склад № 4 - Минск, переулок Софьи Ковалевской, 46</option>
+            </select>
+          </label>
+          <br><br>
+          <label for="date_from"><b>Дата начала хранения:</b>
+            <br>
+            <input type="date" id="date_from" name="date_from" min="2022-07-01" max="2023-07-01">
+          </label>
+          <br><br>
+          <label for="date_to"><b>Дата окончания хранения:</b>
+          <br>
+          <input type="date" id="date_to" name="date_to" min="2022-07-01" max="2023-07-01">
+          </label>
+          <br><br>
+          <div class="clearfix">
+            <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Отменить</button>
+            <button type="submit" class="signup">Арендовать</button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script>
+    // Получить модель
+    var modal = document.getElementById('id02');
+
+    // Когда пользователь щелкает в любом месте за пределами модального, закройте его
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+    </script>
+</div>
+
+<div id="Склады" class="tabcontent">
+  <h3>Расстояние от вас и до наших складов:</h3>
+  <br>
+  {% for storage in storages %}
+  <h4>{{storage.name}} - {{storage.address}}: {{storage.distance_to_client}} км.</h4>
+  {% endfor %}
+</div>
+
+<div id="QR" class="tabcontent">
+  <h3>Предъявите данный QR-код сотруднику склада.</h3>
+  <img src="{{profile.qr_code.url}}">>
+</div>
+
+<script type="text/javascript" src="{% static 'profile.js' %}"></script>
+</body>
+</html> 

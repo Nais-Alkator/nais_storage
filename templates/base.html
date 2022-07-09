@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Nais Storage</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="{% static 'stylesheet.css' %}">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css2?family=Yesteryear&display=swap" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+
+<body id="myPage" data-spy="scroll" data-target=".navbar" data-offset="60">
+<!-- НАВИГАЦИЯ -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="base.html">Nais</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#about">О НАС</a></li>
+        <li><a href="#services">ПРЕИМУЩЕСТВА</a></li>
+        <li><a href="#storage">УСЛУГИ</a></li>
+        <li><a href="#contact">КОНТАКТЫ</a></li>
+        <li><a href="#addresses">СКЛАДЫ</a></li>
+        {% if request.user.is_authenticated %}
+        <li><a href="{% url 'move_to_profile' %}">{{request.user}}</a></li>
+        <li><a href="{% url 'logout' %}">ВЫЙТИ</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}">ВОЙТИ</a></li>
+        <li><a href="{% url 'register' %}">РЕГИСТРАЦИЯ</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron text-center">
+  <h1>Nais Storage</h1>
+  <p>Сервис временного складского хранения</p>
+</div>
+<!-- Container (About Section) -->
+<div id="about" class="container-fluid text-center">
+  <div class="row">
+    <h2>О нас</h2>
+    <p>Nais Storage - крупная компания, специализирующася на временном хранении различных вещей. От малогабаритных (ролики, гироскутеры, документы и др.) до крупногабаритных (шкафы, холодильники, плиты и т.п.)</p>
+  </div>
+</div>
+
+<!-- Container (ADVANTAGES) -->
+<div id="services" class="container-fluid bg-grey text-center">
+  <h2>Наши преимущества:</h2>
+  <br>
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-time logo-small"></span>
+      <h4>Круглосуточно</h4>
+      <p>Доступ на склад в любое время дня и ночи</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-calendar logo-small"></span>
+      <h4>Любые сроки</h4>
+      <p>Широкий диапазон времени хранения: от недели до года</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-signal logo-small"></span>
+      <h4>Вариативно</h4>
+      <p>Множество вариантов боксов - от 1 до 20 м<sup>2</sup></p>
+    </div>
+    </div>
+    <br><br>
+  <div class="row">
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-info-sign logo-small"></span>
+      <h4>Надежно</h4>
+      <p>Сухие отапливаемые помещения</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-eye-open logo-small"></span>
+      <h4>Безопасно</h4>
+      <p>Круглосуточная охрана. Ваши вещи под надежной защитой!</p>
+    </div>
+    <div class="col-sm-4">
+      <span class="glyphicon glyphicon-road logo-small"></span>
+      <h4>Удобно</h4>
+      <p>Широкие просторные лифты и дорожки, большие тележки</p>
+    </div>
+  </div>
+</div>
+
+<!-- REVIEWS -->
+<h2 class="text-center">Отзывы наших клиентов:</h2>
+<div id="myCarousel" class="carousel slide text-center" data-ride="carousel">
+  <ol class="carousel-indicators">
+    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+    <li data-target="#myCarousel" data-slide-to="1"></li>
+    <li data-target="#myCarousel" data-slide-to="2"></li>
+  </ol>
+
+  <!-- Wrapper for slides -->
+  <div class="carousel-inner" role="listbox">
+    <div class="item active">
+    <h4>"Супер! Можно попасть в любое время."<br><span style="font-style:normal;">Иван Иванов</span></h4>
+    </div>
+    <div class="item">
+      <h4>"Круто! На этом складе можно хранить все что угодно."<br><span style="font-style:normal;">Петр Петров</span></h4>
+    </div>
+    <div class="item">
+      <h4>"Обалденно! Теперь я с легкостью могу освободить место от временно ненужных вещей."<br><span style="font-style:normal;">Василий Васильев</span></h4>
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+  </a>
+  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+  </a>
+</div>
+
+<!-- Container (TYPES OF STORAGE) -->
+<div id="storage" class="container-fluid">
+  <div class="text-center">
+    <h2>Виды хранения:</h2>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Аренда бокса</h1>
+        </div>
+        <div class="panel-body">
+          <p><strong>20</strong> видов боксов (от 1 до 20 м<sup>2</sup>)</p>
+          <p><strong>Срок хранения:</strong> от 1 до 12 месяцев</p>
+          <p><strong>Цена:</strong> 600 бел.руб. - 1 м<sup>2</sup>. Каждый последующий м<sup>2</sup> +150 бел.руб.</p>
+        </div>
+
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h1>Сезонное хранение:</h1>
+        </div>
+        <div class="panel-body">
+          <p>Выбор вещей и их количества</p>
+          <p><strong>Срок хранения:</strong> от 1 недели до 6 месяцев</p>
+          <p><strong>Цена:</strong>от 100 до 400 бел.руб.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Container (Contact Section) -->
+<div id="contact" class="container-fluid bg-grey">
+  <h2 class="text-center">КОНТАКТЫ</h2>
+  <br>
+  <div class="row">
+    <div class="col-sm-5">
+      <p>Напишите нам, и мы свяжемся с вами в течении часа!</p>
+      <p><span class="glyphicon glyphicon-map-marker"></span> Минск, Интернациональная 26</p>
+      <p><span class="glyphicon glyphicon-phone"></span> +375(25) 1234567</p>
+      <p><span class="glyphicon glyphicon-envelope"></span> nais_storage@gmail.com</p>
+    </div>
+    <div class="col-sm-6">
+      <div class="row">
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="name" name="name" placeholder="Имя" type="text" required>
+        </div>
+        <div class="col-sm-6 form-group">
+          <input class="form-control" id="email" name="email" placeholder="Email" type="email" required>
+        </div>
+      </div>
+      <textarea class="form-control" id="comments" name="comments" placeholder="Сообщение" rows="5"></textarea><br>
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <button class="btn btn-default pull-right" type="submit">Отправить</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Container Storage's Addresses -->
+<div id="addresses" class="container-fluid">
+  <div class="text-center">
+    <h2>Адреса складов:</h2>
+    <h4>Склад №1 - Минск, улица Домбровская, 8</h4>
+    <h4>Склад №2 - Минск, улица Лукьяновича, 6</h4>
+    <h4>Склад №3 - Минск, улица Омельянюка, 4</h4>
+    <h4>Склад №4 - Минск, переулок Софьи Ковалевской, 46</h4>
+    <h4>Офис - Минск, улица Интернациональная, 26</h4>
+  </div>
+</div>
+
+<!-- Add Yandex Maps -->
+<div class="container">
+<script type="text/javascript" charset="utf-8" async src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A3fa30b1ea8a7c41d7f32a0941f862e7ba8e252c4c2bb7256a0a9395f640de868&amp;width=100%25&amp;height=349&amp;lang=ru_RU&amp;scroll=true"></script>
+</div>
+
+<footer class="container-fluid text-center">
+  <a href="#myPage" title="To Top">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+  </a>
+</footer>
+</body>
+</html>

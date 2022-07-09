@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html>
+<h1>Создание профиля</h1>
+<h3>Пожалуйста, заполните форму ниже</h3>
+<form action="." method="post">
+    {{ user_form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Create my account"></p>
+</form>
+</html>
