@@ -1,6 +1,6 @@
 Django==3.2.14
 django-debug-toolbar==3.2.4
-django-phonenumber-field==6.3.0
+django-phonenumber-field==6.0.0
 environs==9.5.0
 geopy==2.2.0
 Jinja2==3.1.2
