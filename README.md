@@ -1,2 +1,1 @@
-# nais_storage
- Django, Jinja
+http://alkator.pythonanywhere.com/
